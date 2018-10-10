@@ -4,6 +4,7 @@ import zupage from "zupage";
 import { Container, Image } from "semantic-ui-react";
 import Gallery from "react-photo-gallery";
 import Lightbox from "react-images";
+import Linkify from "react-linkify";
 
 class App extends Component {
   state = {
@@ -97,19 +98,12 @@ class App extends Component {
 
   renderParagraphs = () => {
     const { body } = this.state;
-
     let paragraphs = body.match(/[^\r\n]+/g);
-
     if (paragraphs) {
       return paragraphs.map((paragraph, i) => {
-        return (
-          <p className="Body-Text" key={i}>
-            {paragraph}
-          </p>
-        );
+        return <p key={i}>{paragraph}</p>;
       });
     }
-
     return <p />;
   };
 
@@ -119,7 +113,7 @@ class App extends Component {
       <div className="Template">
         <Container text>
           {this.renderHeader()}
-          {this.renderParagraphs()}
+          <Linkify className="Body-Text">{this.renderParagraphs()}</Linkify>
           <Gallery photos={photos} onClick={this.openLightbox} />
         </Container>
         <Lightbox
