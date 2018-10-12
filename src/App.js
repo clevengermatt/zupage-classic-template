@@ -4,7 +4,7 @@ import zupage from "zupage";
 import { Container, Image } from "semantic-ui-react";
 import Gallery from "react-photo-gallery";
 import Lightbox from "react-images";
-import Linkify from "react-linkify";
+import MediaBody from "react-media-body";
 
 class App extends Component {
   state = {
@@ -96,24 +96,15 @@ class App extends Component {
     );
   };
 
-  renderParagraphs = () => {
-    const { body } = this.state;
-    let paragraphs = body.match(/[^\r\n]+/g);
-    if (paragraphs) {
-      return paragraphs.map((paragraph, i) => {
-        return <p key={i}>{paragraph}</p>;
-      });
-    }
-    return <p />;
-  };
-
   render() {
-    const { photos } = this.state;
+    const { body, photos } = this.state;
     return (
       <div className="Template">
         <Container text>
           {this.renderHeader()}
-          <Linkify className="Body-Text">{this.renderParagraphs()}</Linkify>
+          <MediaBody className="Body-Text" mediaWidth="100%">
+            {body}
+          </MediaBody>
           <Gallery photos={photos} onClick={this.openLightbox} />
         </Container>
         <Lightbox
